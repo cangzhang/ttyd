@@ -1,16 +1,18 @@
 {
   "extends": "./node_modules/gts/tsconfig-google.json",
   "compilerOptions": {
-    "moduleResolution": "node",
+    "module": "esnext",
+    "moduleResolution": "bundler",
     "esModuleInterop": true,
     "jsx": "react",
     "jsxFactory": "h",
-    "allowJs": true,
     "noImplicitAny": false,
     "declaration": false,
     "experimentalDecorators": true,
     "strictPropertyInitialization": false,
+    "verbatimModuleSyntax": true,
     "lib": ["es2019", "dom"],
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*.tsx",

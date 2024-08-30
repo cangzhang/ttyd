@@ -1,4 +1,4 @@
-import { h, Component, ComponentChildren } from 'preact';
+import { h, type ComponentChildren } from 'preact';
 
 import './modal.scss';
 
@@ -7,21 +7,15 @@ interface Props {
     children: ComponentChildren;
 }
 
-export class Modal extends Component<Props> {
-    constructor(props: Props) {
-        super(props);
-    }
+export function Modal({ show, children }: Props) {
+    if (!show) return null;
 
-    render({ show, children }: Props) {
-        return (
-            show && (
-                <div className="modal">
-                    <div className="modal-background" />
-                    <div className="modal-content">
-                        <div className="box">{children}</div>
-                    </div>
-                </div>
-            )
-        );
-    }
+    return (
+        <div className="modal">
+            <div className="modal-background" />
+            <div className="modal-content">
+                <div className="box">{children}</div>
+            </div>
+        </div>
+    )
 }

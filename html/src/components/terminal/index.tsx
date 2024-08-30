@@ -1,6 +1,7 @@
-import { bind } from 'decko';
-import { Component, h } from 'preact';
-import { Xterm, XtermOptions } from './xterm';
+import { h } from 'preact';
+import { useRef, useState } from 'preact/hooks';
+
+import { Xterm, type XtermOptions } from './xterm';
 
 import '@xterm/xterm/css/xterm.css';
 import { Modal } from '../modal';
@@ -9,51 +10,27 @@ interface Props extends XtermOptions {
     id: string;
 }
 
-interface State {
-    modal: boolean;
-}
+export function Terminal({ id, ...rest }: Props) {
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [modal, setModal] = useState(false);
 
-export class Terminal extends Component<Props, State> {
-    private container: HTMLElement;
-    private xterm: Xterm;
+    const showModal = () => setModal(true);
+    const xterm = useRef<Xterm>(new Xterm(rest, showModal));
 
-    constructor(props: Props) {
-        super();
-        this.xterm = new Xterm(props, this.showModal);
-    }
-
-    async componentDidMount() {
-        await this.xterm.refreshToken();
-        this.xterm.open(this.container);
-        this.xterm.connect();
-    }
-
-    componentWillUnmount() {
-        this.xterm.dispose();
-    }
-
-    render({ id }: Props, { modal }: State) {
-        return (
-            <div id={id} ref={c => (this.container = c as HTMLElement)}>
-                <Modal show={modal}>
-                    <label class="file-label">
-                        <input onChange={this.sendFile} class="file-input" type="file" multiple />
-                        <span class="file-cta">Choose files…</span>
-                    </label>
-                </Modal>
-            </div>
-        );
-    }
-
-    @bind
-    showModal() {
-        this.setState({ modal: true });
-    }
-
-    @bind
-    sendFile(event: Event) {
-        this.setState({ modal: false });
+    const sendFile = (event: Event) => {
+        setModal(false);
         const files = (event.target as HTMLInputElement).files;
-        if (files) this.xterm.sendFile(files);
+        if (files) xterm.current?.sendFile(files);
     }
+
+    return (
+        <div id={id} ref={containerRef}>
+            <Modal show={modal}>
+                <label class="file-label">
+                    <input onChange={sendFile} class="file-input" type="file" multiple />
+                    <span class="file-cta">Choose files…</span>
+                </label>
+            </Modal>
+        </div>
+    );
 }

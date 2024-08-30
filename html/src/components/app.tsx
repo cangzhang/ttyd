@@ -1,6 +1,5 @@
-import { h, Component } from 'preact';
-
-import { Terminal } from './terminal';
+import { h } from 'preact';
+import { Terminal } from './terminal/index';
 
 import type { ITerminalOptions, ITheme } from '@xterm/xterm';
 import type { ClientOptions, FlowControl } from './terminal/xterm';
@@ -51,17 +50,15 @@ const flowControl = {
     lowWater: 4,
 } as FlowControl;
 
-export class App extends Component {
-    render() {
-        return (
-            <Terminal
-                id="terminal-container"
-                wsUrl={wsUrl}
-                tokenUrl={tokenUrl}
-                clientOptions={clientOptions}
-                termOptions={termOptions}
-                flowControl={flowControl}
-            />
-        );
-    }
+export function App() {
+    return (
+        <Terminal
+            id="terminal-container"
+            wsUrl={wsUrl}
+            tokenUrl={tokenUrl}
+            clientOptions={clientOptions}
+            termOptions={termOptions}
+            flowControl={flowControl}
+        />
+    )
 }
