@@ -2,9 +2,9 @@ import { h } from 'preact';
 import { useRef, useState } from 'preact/hooks';
 
 import { Xterm, type XtermOptions } from './xterm';
+import { Modal } from '@/components/modal';
 
 import '@xterm/xterm/css/xterm.css';
-import { Modal } from '../modal';
 
 interface Props extends XtermOptions {
     id: string;
@@ -21,7 +21,7 @@ export function Terminal({ id, ...rest }: Props) {
         setModal(false);
         const files = (event.target as HTMLInputElement).files;
         if (files) xterm.current?.sendFile(files);
-    }
+    };
 
     return (
         <div id={id} ref={containerRef}>

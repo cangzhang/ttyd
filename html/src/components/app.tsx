@@ -2,7 +2,7 @@ import { h } from 'preact';
 import { Terminal } from './terminal/index';
 
 import type { ITerminalOptions, ITheme } from '@xterm/xterm';
-import type { ClientOptions, FlowControl } from './terminal/xterm';
+import type { ClientOptions, FlowControl } from '@/components/terminal/xterm';
 
 const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
 const path = window.location.pathname.replace(/[/]+$/, '');
@@ -60,5 +60,5 @@ export function App() {
             termOptions={termOptions}
             flowControl={flowControl}
         />
-    )
+    );
 }

@@ -17,5 +17,5 @@ export function Modal({ show, children }: Props) {
                 <div className="box">{children}</div>
             </div>
         </div>
-    )
+    );
 }

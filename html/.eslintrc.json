@@ -16,5 +16,13 @@
         "node/no-unpublished-require": "off"
       }
     }
-  ]
+  ],
+  "settings": {
+    "import/resolver": {
+      "typescript": {
+        "alwaysTryTypes": true,
+        "project": "./tsconfig.json"
+      }
+    }
+  }
 }
